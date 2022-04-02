@@ -1,25 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {TreeRecursive} from './components/TreeRecursive';
+import {Folder} from './components/Folder';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='header'>
+        <h1 className="">Tree Viewer by Will Ricauter </h1>
+      </div>
+
+
+      <div className="terminal-window">
+        <header>
+          <div className="button green"></div>
+          <div className="button yellow"></div>
+          <div className="button red"></div>
+        </header>
+        <section className="terminal">
+        <div className='tree-wrapper'>
+          <Folder 
+            key='root'
+            name='root'
+            path='root'
+          >
+            <TreeRecursive path={'./'} /> 
+          </Folder>
+        </div>
+        </section>
+      </div>
+    </>
   );
 }
 
