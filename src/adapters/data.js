@@ -4,8 +4,6 @@ const api_uri = 'http://localhost:3000/api/v1/tree'
 
 export const getChildrens = (path) => {
 
-
-
     let config = {
         method: 'get',
         url: `${api_uri}/children`,
@@ -20,4 +18,20 @@ export const getChildrens = (path) => {
 
     return axios( config )
 
+}
+
+export const getFile = (path) => {
+    let config = {
+        method: 'get',
+        url: `${api_uri}/childFile`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        params: {
+            path: path
+        }
+    };
+
+    return axios( config )
 }
