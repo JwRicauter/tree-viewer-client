@@ -14,11 +14,11 @@ body {
     }
     .terminal-window {
         text-align: left;
-        width: 600px;
-        height: 360px;
+        width: 800px;
+        height: 450px;
         border-radius: 10px;
         position: relative;
-        margin-left: 5%;
+        margin: auto;
     }
     .terminal-window header {
         background: #E0E8F0;
@@ -60,6 +60,19 @@ body {
         overflow: auto;
 
         .tree-wrapper {
+            .previewer {
+                margin-top: 1%;
+                margin-bottom: 1%;
+                small {
+                    display: block;
+                }
+                .preview-img {
+                    width: 600px;
+                    height: auto;
+                }
+            }
+
+
             .file-wrapper {
                 padding-left: 20px;
                 padding-top: 3px;
