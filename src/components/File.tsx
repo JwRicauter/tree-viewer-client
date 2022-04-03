@@ -53,32 +53,21 @@ export const File: React.FC<FileData> = ({name, path}) => {
         }
     }, [name]);
     
-    const fileCall = (path: string) => {
-        getFile(path).then((res) => {
-            setFile(res)
-        });
-    }
 
-    const preview_file = (path: string) => {
-        fileCall(path);
+    const action_preview = (file: AxiosResponse) => {
         try {
-            if (file){
-                
-                let content_type_general = file.headers['content-type'].split('/')[0];
-                if ( content_type_general === 'text') {
-                    setPreviewText(!previewText);   
-                } else if (content_type_general === 'image') {
-                    setPreviewImage(!previewImage);
-                }
-
-            } 
+            let content_type_general = file.headers['content-type'].split('/')[0];
+            if ( content_type_general === 'text') {
+                setPreviewText(!previewText);   
+            } else if (content_type_general === 'image') {
+                setPreviewImage(!previewImage);
+            }
         } catch(err) {
             console.log(`Error: ${err}`);
         }
     }
 
-    const download_file = (path: string, name: string) => {
-        fileCall(path);
+    const action_download = (file: AxiosResponse, name: string) => {
         try {
             if (file){
                 downloader(file, name);
@@ -87,8 +76,17 @@ export const File: React.FC<FileData> = ({name, path}) => {
         } catch(err) {
             console.log(`Error: ${err}`);
         }
-        
     }
+
+    const fileHandler = (path: string, name: string, action: string) => {
+        getFile(path).then((res) => {
+            setFile(res);
+            if (res.status === 200 && action === 'PREVIEW') action_preview(res)
+            if (res.status === 200 && action === 'DOWNLOAD') action_download(res, name)
+                
+        });
+    }
+
 
     return (
         <>
@@ -98,14 +96,14 @@ export const File: React.FC<FileData> = ({name, path}) => {
                 { preview &&
                     <button 
                     className='button'
-                    onClick={() => preview_file(path)}
+                    onClick={() => fileHandler(path, name, 'PREVIEW')}
                     >
                         Preview
                     </button>
                 }
                 <button 
                 className='button'
-                onClick={() => download_file(path, name)} 
+                onClick={() => fileHandler(path, name, 'DOWNLOAD')} 
                 >
                     Download
                 </button>
@@ -120,8 +118,9 @@ export const File: React.FC<FileData> = ({name, path}) => {
                 <div className='previewer'>
                     <small>Preview</small>
                     <img 
-                    className="preview-img" 
-                    src={`data:${file.headers['content-type']};base64,${file.data}`} 
+                     alt='preview'
+                     className="preview-img" 
+                     src={`data:${file.headers['content-type']};base64,${file.data}`} 
                     />
                 </div>
             }

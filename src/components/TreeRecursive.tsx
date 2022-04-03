@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Folder} from './Folder';
 import {File} from './File';
 import {
@@ -26,6 +26,7 @@ export const TreeRecursive: React.FC<path> = ({path}) => {
             )
         });
     }, [path]);
+    
 
     const recursion = children.map((item: nodeData) => {
         if (item.children) {
@@ -47,6 +48,7 @@ export const TreeRecursive: React.FC<path> = ({path}) => {
         <>
             {recursion}
         </>
+
     )
 
 };
